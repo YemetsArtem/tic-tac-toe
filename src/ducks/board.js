@@ -1,6 +1,5 @@
 import { Record } from 'immutable'
  
- 
 // Constants
 export const moduleName = 'board';
 export const FILL_SQUARE = `${ moduleName }/FILL_SQUARE`;
@@ -8,7 +7,7 @@ export const FILL_SQUARE = `${ moduleName }/FILL_SQUARE`;
  
 // Reducer
 const ReducerRecord = Record({
- 
+    squares: Array(9).fill(null)
 });
  
 export default function reducer(state = new ReducerRecord(), action) {
