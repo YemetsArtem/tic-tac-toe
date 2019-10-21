@@ -4,6 +4,7 @@ import calculateWinner from '../middlewares/calculateWinner';
 // Constants
 export const moduleName = 'board';
 export const FILL_SQUARE = `${moduleName}/FILL_SQUARE`;
+export const DETERMINE_WINNER = `${moduleName}/DETERMINE_WINNER`;
 
 // Reducer
 const ReducerRecord = Record({
@@ -11,6 +12,7 @@ const ReducerRecord = Record({
     currentPlayer: "X",
     playerX: new OrderedSet([]),
     playerO: new OrderedSet([]),
+    winner: null
 });
 
 export default function reducer(state = new ReducerRecord(), action) {
@@ -27,6 +29,9 @@ export default function reducer(state = new ReducerRecord(), action) {
                     : state
             )
 
+        case DETERMINE_WINNER:
+            return state.set("winner", calculateWinner(state.playerX, state.playerO))
+
         default:
             return state;
     }
@@ -40,12 +45,14 @@ export function fillSquare(squareId, currentPlayer) {
     }
 }
 
+export function determineWinner() {
+    return {
+        type: DETERMINE_WINNER
+    }
+}
 
 // Selectors
 export const getState = state => state[moduleName];
 export const getSquares = state => getState(state).squares;
 export const getPlayer = state => getState(state).currentPlayer;
-export const chechWinner = state => calculateWinner(
-    getState(state).playerX, 
-    getState(state).playerO
-);
+export const getWinner = state => getState(state).winner;
