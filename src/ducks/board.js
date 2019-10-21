@@ -1,4 +1,5 @@
 import { Record, OrderedSet } from 'immutable'
+import calculateWinner from '../middlewares/calculateWinner';
 
 // Constants
 export const moduleName = 'board';
@@ -10,18 +11,16 @@ const ReducerRecord = Record({
     currentPlayer: "X",
     playerX: new OrderedSet([]),
     playerO: new OrderedSet([]),
-    winner: null
 });
 
 export default function reducer(state = new ReducerRecord(), action) {
-    const { type, payload, winner } = action;
+    const { type, payload } = action;
 
     switch (type) {
         case FILL_SQUARE:
             return (
                 !state.squares[payload.squareId]
                     ? state
-                        .set("winner", winner ? winner : null)
                         .setIn(['squares', payload.squareId], payload.currentPlayer)
                         .update(`player${payload.currentPlayer}`, player => player.add(payload.squareId))
                         .set("currentPlayer", state.currentPlayer === "X" ? "O" : "X")
@@ -42,9 +41,11 @@ export function fillSquare(squareId, currentPlayer) {
 }
 
 
-
 // Selectors
-export const getSquares = state => state[moduleName].squares;
-export const getPlayer = state => state[moduleName].currentPlayer;
-export const chechWinner = state => state[moduleName].winner;
-
+export const getState = state => state[moduleName];
+export const getSquares = state => getState(state).squares;
+export const getPlayer = state => getState(state).currentPlayer;
+export const chechWinner = state => calculateWinner(
+    getState(state).playerX, 
+    getState(state).playerO
+);
