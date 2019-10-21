@@ -3,7 +3,7 @@ import calculateWinner from '../middlewares/calculateWinner';
 
 // Constants
 export const moduleName = 'board';
-export const FILL_SQUARE = `${moduleName}/FILL_SQUARE`;
+export const SET_AND_CHANGE_PLAYER = `${moduleName}/SET_AND_CHANGE_PLAYER`;
 export const DETERMINE_WINNER = `${moduleName}/DETERMINE_WINNER`;
 
 // Reducer
@@ -19,7 +19,7 @@ export default function reducer(state = new ReducerRecord(), action) {
     const { type, payload } = action;
 
     switch (type) {
-        case FILL_SQUARE:
+        case SET_AND_CHANGE_PLAYER:
             return (
                 !state.squares[payload.squareId]
                     ? state
@@ -38,9 +38,9 @@ export default function reducer(state = new ReducerRecord(), action) {
 }
 
 // Actions Creators
-export function fillSquare(squareId, currentPlayer) {
+export function setAndChangePlayer(squareId, currentPlayer) {
     return {
-        type: FILL_SQUARE,
+        type: SET_AND_CHANGE_PLAYER,
         payload: { squareId, currentPlayer }
     }
 }
