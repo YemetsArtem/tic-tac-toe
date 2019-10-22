@@ -14,8 +14,8 @@ function calculateWinner(playerX, playerO) {
     ];
     
     winnerPatterns.forEach((pattern) => {
-        if (isEqual(pattern, intersection(playerX.toJS().sort(), pattern))) return winner = "Winner - X";
-        if (isEqual(pattern, intersection(playerO.toJS().sort(), pattern))) return winner = "Winner - O";
+        if (isEqual(pattern, intersection(playerX.toJS().sort(), pattern))) return winner = "Winner - player X";
+        if (isEqual(pattern, intersection(playerO.toJS().sort(), pattern))) return winner = "Winner - player O";
     });
  
     

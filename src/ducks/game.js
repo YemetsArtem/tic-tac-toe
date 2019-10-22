@@ -1,10 +1,11 @@
 import { Record, OrderedSet } from 'immutable'
-import calculateWinner from '../middlewares/calculateWinner';
+import calculateWinner from '../utils/calculateWinner';
 
 // Constants
-export const moduleName = 'board';
+export const moduleName = 'game';
 export const SET_AND_CHANGE_PLAYER = `${moduleName}/SET_AND_CHANGE_PLAYER`;
 export const DETERMINE_WINNER = `${moduleName}/DETERMINE_WINNER`;
+export const RESTART_GAME = `${moduleName}/RESTART_GAME`;
 
 // Reducer
 const ReducerRecord = Record({
@@ -32,6 +33,9 @@ export default function reducer(state = new ReducerRecord(), action) {
         case DETERMINE_WINNER:
             return state.set("winner", calculateWinner(state.playerX, state.playerO))
 
+        case RESTART_GAME:
+            return new ReducerRecord()
+
         default:
             return state;
     }
@@ -50,6 +54,13 @@ export function determineWinner() {
         type: DETERMINE_WINNER
     }
 }
+
+export function restartGame() {
+    return {
+        type: RESTART_GAME
+    }
+}
+
 
 // Selectors
 export const getState = state => state[moduleName];
