@@ -8,6 +8,7 @@ const Board = () => {
 
     return (
         <div className="board">
+            Board
             <ul className="board">
                 {
                     squares.map((square, i) =>
